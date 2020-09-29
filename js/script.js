@@ -66,14 +66,19 @@ $("#add").click(function() {
 //UPDATE
 $("#list").on("click", ".fa-edit", function() {
 
-  var questo = $(this).parent().siblings();
+  var questo = $(this).parent().prev();
   var id = questo.attr("id");
+  var val =  questo.children("input").val();
+  console.log(val);
   $.ajax(
     {
       "url" : " http://157.230.17.132:3014/todos/" + id,
-      "method" : "PATCH",
+      "method" : "PUT",
+      "data": {
+        "text": val
+      },
       "success": function(data) {
-          questo.text(valueBtn);
+         alert("elemento modificato");
       },
       "error": function() {
         alert("errore");
@@ -85,7 +90,7 @@ $("#list").on("click", ".fa-edit", function() {
 });
 
 
-
+//TEMPLATE E APPEND
 function render(data) {
   var source = $("#template").html();
   var template = Handlebars.compile(source);
